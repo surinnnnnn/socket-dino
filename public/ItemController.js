@@ -56,11 +56,11 @@ class ItemController {
      }
 
      handleItemResponse(response) {
-          if (response.itemIds) {
+          if (response.itemInfo) {
                // 응답이 handlerId 8에 해당하는 경우
-               console.log(`받은 아이템 정보:`, response); // 응답 로그
+               console.log(`출현가능 아이템:`, response); // 응답 로그
 
-               const itemArray = response.itemIds;
+               const itemArray = response.itemInfo;
 
                // 랜덤하게 하나의 아이템 선택
                if (itemArray.length > 0) {
@@ -68,35 +68,39 @@ class ItemController {
                          0,
                          itemArray.length - 1
                     );
-                    const selectedItemId = itemArray[randomIndex];
-                    const itemInfo = this.itemImages.find(
-                         (image) => image.id === selectedItemId
+                    const selectedItem = itemArray[randomIndex];
+
+                    const itemAtt = this.itemImages.find(
+                         (image) => image.id === selectedItem.id
                     );
 
-                    if (itemInfo) {
+                    if (itemAtt) {
                          const x = this.canvas.width * 1.5; // 화면 오른쪽에서 아이템 출현
                          const y = this.getRandomNumber(
                               10,
-                              this.canvas.height - itemInfo.height
+                              this.canvas.height - itemAtt.height
                          );
+                         const itemScore = selectedItem.score;
 
                          // 아이템 객체 생성
                          const item = new Item(
                               this.ctx,
-                              itemInfo.id,
+                              itemAtt.id,
                               x,
                               y,
-                              itemInfo.width,
-                              itemInfo.height,
-                              itemInfo.image
+                              itemAtt.width,
+                              itemAtt.height,
+                              itemAtt.image,
+                              itemScore
                          );
 
                          // 생성된 아이템을 items 배열에 추가
                          this.items.push(item);
+                         console.log(`아이템 정보:`, this.items);
                     } else {
                          console.error(
                               "Item info not found for ID:",
-                              selectedItemId
+                              selectedItem
                          );
                     }
                } else {
@@ -141,11 +145,12 @@ class ItemController {
                     collidedItem.x,
                     collidedItem.y,
                     collidedItem.width,
-                    collidedItem.height
+                    collidedItem.height,
+                    collidedItem.score
                );
-               return {
-                    itemId: collidedItem.id,
-               };
+
+               const itemScore = [collidedItem.score];
+               return { itemScore };
           }
      }
 

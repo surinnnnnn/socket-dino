@@ -68,8 +68,9 @@ class Score {
           }
      }
 
-     getItem(itemId) {
-          this.score += 0;
+     getItem(itemScore) {
+          this.score += itemScore[0];
+          console.log("회득점수:", itemScore[0]);
      }
 
      reset() {

@@ -277,8 +277,8 @@ function gameLoop(currentTime) {
      // itemController가 null이 아닌 경우에만 collideWith 및 draw 호출
      if (itemController) {
           const collideWithItem = itemController.collideWith(player);
-          if (collideWithItem && collideWithItem.itemId) {
-               score.getItem(collideWithItem.itemId);
+          if (collideWithItem && collideWithItem.itemScore) {
+               score.getItem(collideWithItem.itemScore);
           }
      }
 
