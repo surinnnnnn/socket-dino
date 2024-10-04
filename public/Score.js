@@ -69,8 +69,8 @@ class Score {
      }
 
      getItem(itemScore) {
-          this.score += itemScore[0];
-          console.log("회득점수:", itemScore[0]);
+          this.score += itemScore;
+          console.log("회득점수:", itemScore);
      }
 
      reset() {
@@ -78,15 +78,8 @@ class Score {
           this.currentStageId = 1000;
      }
 
-     setHighScore() {
-          const highScore =
-               Number(localStorage.getItem(this.HIGH_SCORE_KEY)) || 0;
-          if (this.score > highScore) {
-               localStorage.setItem(
-                    this.HIGH_SCORE_KEY,
-                    Math.floor(this.score)
-               );
-          }
+     setHighScore(finalScore) {
+          sendEvent(9, { finalScore });
      }
 
      getScore() {

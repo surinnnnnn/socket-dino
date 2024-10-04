@@ -173,7 +173,6 @@ function getScaleRatio() {
 
 function setScreen() {
      scaleRatio = getScaleRatio();
-     console.log("Scale Ratio:", scaleRatio);
      canvas.width = GAME_WIDTH * scaleRatio;
      canvas.height = GAME_HEIGHT * scaleRatio;
      createSprites();
@@ -270,7 +269,17 @@ function gameLoop(currentTime) {
 
      if (!gameover && cactiController.collideWith(player)) {
           gameover = true;
-          score.setHighScore();
+          // r게임 종료 이벤트 보내기
+          const finalScore = score.getScore();
+          score.setHighScore(finalScore);
+          const itemScore = itemController.totalItemScore;
+
+          sendEvent(3, {
+               timestamp: Date.now(),
+               finalScore,
+               itemScore,
+          });
+
           setupGameReset();
      }
 

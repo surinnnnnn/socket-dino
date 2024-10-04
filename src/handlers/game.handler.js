@@ -20,10 +20,11 @@ export const gameStart = (uuid, payload) => {
 
      console.log("Stage: ", getStage(uuid), getItems(uuid));
 
-     return { status: "success" };
+     return { status: "success", message: "Game started successfully" };
 };
+
 export const gameEnd = (uuid, payload) => {
-     const { timestamp: gameEndTime, score } = payload;
+     const { timestamp: gameEndTime, score, itemScore } = payload;
      const stages = getStage(uuid);
 
      if (!stages.length) {
@@ -42,9 +43,10 @@ export const gameEnd = (uuid, payload) => {
           totalScore += stageDuration; // 1초당 1점
      });
 
-     if (Math.abs(score - totalScore) > 5) {
+     const adjustedScore = score - itemScore;
+
+     if (Math.abs(adjustedScore - totalScore) > 5) {
           return { status: "fail", message: "Score verification failed" };
      }
-
      return { status: "success", message: "Game ended successfully", score };
 };

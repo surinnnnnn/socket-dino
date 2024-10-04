@@ -18,6 +18,7 @@ class ItemController {
           this.currentStageId = null; // 초기값을 null로 설정
 
           this.setNextItemTime();
+          this.totalItemScore = 0;
 
           // 서버 응답을 처리하는 리스너
           socket.on("response", (response) => {
@@ -57,61 +58,40 @@ class ItemController {
 
      handleItemResponse(response) {
           if (response.itemInfo) {
-               // 응답이 handlerId 8에 해당하는 경우
-               console.log(`출현가능 아이템:`, response); // 응답 로그
+               const selectedItem = response.itemInfo;
+               const itemAtt = this.itemImages.find(
+                    (image) => image.id === selectedItem.id
+               );
 
-               const itemArray = response.itemInfo;
-
-               // 랜덤하게 하나의 아이템 선택
-               if (itemArray.length > 0) {
-                    const randomIndex = this.getRandomNumber(
-                         0,
-                         itemArray.length - 1
+               if (itemAtt) {
+                    const x = this.canvas.width * 1.5; // 화면 오른쪽에서 아이템 출현
+                    const y = this.getRandomNumber(
+                         10,
+                         this.canvas.height - itemAtt.height
                     );
-                    const selectedItem = itemArray[randomIndex];
+                    const itemScore = selectedItem.score;
 
-                    const itemAtt = this.itemImages.find(
-                         (image) => image.id === selectedItem.id
+                    // 아이템 객체 생성
+                    const item = new Item(
+                         this.ctx,
+                         itemAtt.id,
+                         x,
+                         y,
+                         itemAtt.width,
+                         itemAtt.height,
+                         itemAtt.image,
+                         itemScore
                     );
 
-                    if (itemAtt) {
-                         const x = this.canvas.width * 1.5; // 화면 오른쪽에서 아이템 출현
-                         const y = this.getRandomNumber(
-                              10,
-                              this.canvas.height - itemAtt.height
-                         );
-                         const itemScore = selectedItem.score;
-
-                         // 아이템 객체 생성
-                         const item = new Item(
-                              this.ctx,
-                              itemAtt.id,
-                              x,
-                              y,
-                              itemAtt.width,
-                              itemAtt.height,
-                              itemAtt.image,
-                              itemScore
-                         );
-
-                         // 생성된 아이템을 items 배열에 추가
-                         this.items.push(item);
-                         console.log(`아이템 정보:`, this.items);
-                    } else {
-                         console.error(
-                              "Item info not found for ID:",
-                              selectedItem
-                         );
-                    }
+                    // 생성된 아이템을 items 배열에 추가
+                    this.items.push(item);
                } else {
-                    console.warn("No item IDs received from server.");
+                    console.error(
+                         "Item info not found for ID:",
+                         selectedItem.id
+                    );
                }
           }
-     }
-
-     setStageId(stageId) {
-          this.currentStageId = stageId; // 스테이지 ID 설정
-          localStorage.setItem("currentStageId", stageId); // 로컬 스토리지에 저장
      }
 
      update(gameSpeed, deltaTime) {
@@ -140,6 +120,7 @@ class ItemController {
           const collidedItem = this.items.find((item) =>
                item.collideWith(sprite)
           );
+
           if (collidedItem) {
                this.ctx.clearRect(
                     collidedItem.x,
@@ -148,16 +129,18 @@ class ItemController {
                     collidedItem.height,
                     collidedItem.score
                );
+               this.totalItemScore += collidedItem.score;
 
-               const itemScore = [collidedItem.score];
+               const itemScore = collidedItem.score;
                return { itemScore };
           }
      }
 
      reset() {
           this.items = [];
-          this.currentStageId = 1000; // 초기 스테이지 ID 설정
+          this.currentStageId = 1000; // 초기 스테이지 ID
           this.stageChange = true;
+          this.totalItemScore = 0;
      }
 }
 

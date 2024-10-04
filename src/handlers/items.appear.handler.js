@@ -1,9 +1,9 @@
 import { getGameAssets } from "../init/assets.js";
-import { getItems, setItems, clearItems } from "../../models/items.model.js";
+import { clearItems } from "../../models/items.model.js";
 
 // 아이템 출현
 export const itemAppear = (uuid, payload) => {
-     //  itemUnlocks, items 데이터 가져오기
+     // itemUnlocks, items 데이터 가져오기
      const { itemUnlocks, items } = getGameAssets();
 
      // 현재 uuid에 해당하는 아이템을 초기화 (새로운 아이템 출현 준비)
@@ -13,17 +13,32 @@ export const itemAppear = (uuid, payload) => {
      const { nextStageId } = payload;
      console.log("nextStageId:", nextStageId);
 
-     // itemUnlocks에서 해당 스테이지와 일치하는 아이템 배열 찾기
+     // itemUnlocks에서 해당 스테이지와 일치하는 아이템 객체 찾기
      const unlockedItems = itemUnlocks.data.filter(
-          (items) => items.stage_id === nextStageId
+          (item) => item.stage_id === nextStageId
      );
 
-     const itemIds = unlockedItems.reduce((acc, item) => {
-          return acc.concat(item.item_id); // item_id 배열을 합칩니다.
-     }, []);
-     // items에서 해당 unlockedItems.item_id와 일치하는 아이템  배열 만들기
-     // itemInfo ex) { "id": 1000, "score": 0 }
-     const itemInfo = items.data.filter((item) => itemIds.includes(item.id));
+     // unlockedItems에서 랜덤으로 하나의 아이템 선택
+     if (unlockedItems.length === 0) {
+          return {
+               status: "fail",
+               message: "No unlocked items for this stage",
+          };
+     }
 
+     const selectedItem = unlockedItems[0];
+     // console.log("출현가능:", selectedItem);
+     // 선택한 아이템의 정보를 items에서 찾기
+     const randomIndex = Math.floor(
+          Math.random() * selectedItem.item_id.length
+     );
+
+     const itemId = selectedItem.item_id[randomIndex];
+     const itemInfo = items.data.find((item) => itemId === item.id);
+
+     if (!itemInfo) {
+          return { status: "fail", message: "Item information not found" };
+     }
+     // console.log("랜덤픽:", itemInfo);
      return { status: "success", itemInfo };
 };
