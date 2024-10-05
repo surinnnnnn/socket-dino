@@ -11,7 +11,7 @@ const PORT = 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 // ㄴ> payload 를 자동으로 파싱해주는 미들웨어: 중첩객체(배열 또는 객체)의 처리를 제한한다.
-app.use(express.static("assets"));
+app.use("/assets", express.static("assets"));
 app.use(express.static("public"));
 initSocket(server);
 

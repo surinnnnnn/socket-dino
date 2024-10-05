@@ -1,4 +1,5 @@
 import { sendEvent } from "./Socket.js";
+import stage from "../assets/stage.json" with { type: "json" };
 
 class Score {
      score = 0;
@@ -15,22 +16,12 @@ class Score {
           this.loadStageData();
      }
 
-     async loadStageData() {
-          try {
-               const response = await fetch("/stage.json"); // JSON 파일 요청
-               if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-               }
-               const data = await response.json();
-               this.stages = data.data; // 스테이지 데이터를 저장
-          } catch (error) {
-               console.error("Failed to load stage data:", error);
-          }
+     loadStageData() {
+          this.stages = stage.data; // JSON에서 스테이지 데이터 로드
      }
 
      update(deltaTime) {
           this.score += deltaTime * 0.001;
-          // 점수가 10점 쌓일 때마다 서버에 메시지 전송
 
           const currentStageData = this.stages.find(
                (stage) => this.score >= stage.score
@@ -49,7 +40,6 @@ class Score {
           ) {
                this.stageChange = false;
 
-               // 새로운 스테이지 ID
                const newStageId = nextStageData.id;
 
                // 서버로 스테이지 변경 메시지 전송
