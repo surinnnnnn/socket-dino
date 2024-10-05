@@ -10,15 +10,14 @@ export const itemAppear = (uuid, payload) => {
      clearItems(uuid);
 
      // payload에서 stage_id를 추출 (어떤 스테이지에서 아이템이 출현해야 하는지)
-     const { nextStageId } = payload;
-     console.log("nextStageId:", nextStageId);
+     const { StageId } = payload;
 
      // itemUnlocks에서 해당 스테이지와 일치하는 아이템 객체 찾기
      const unlockedItems = itemUnlocks.data.filter(
-          (item) => item.stage_id === nextStageId
+          (item) => item.stage_id === StageId
      );
 
-     // unlockedItems에서 랜덤으로 하나의 아이템 선택
+     // unlockedItems에서 랜덤으로 하나의 아이템 선 택
      if (unlockedItems.length === 0) {
           return {
                status: "fail",

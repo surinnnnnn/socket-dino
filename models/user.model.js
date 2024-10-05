@@ -1,5 +1,6 @@
 // 저장소 만들기(uuid, socketId)
 // 원래 DB에 직접 입력
+
 const users = [];
 
 export const addUser = (user) => {

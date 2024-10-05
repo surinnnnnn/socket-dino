@@ -52,7 +52,7 @@ class ItemController {
                this.stageChange = false;
 
                // 서버로 현재 스테이지 ID를 보내고 아이템 ID 배열을 받아옴
-               sendEvent(8, { nextStageId: this.currentStageId });
+               sendEvent(8, { StageId: this.currentStageId });
           }
      }
 

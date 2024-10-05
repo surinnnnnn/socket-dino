@@ -23,7 +23,8 @@ const sendEvent = (handlerId, payload) => {
 };
 
 socket.on("response", (response) => {
-     console.log("받은 응답:", response); // 그냥 응답 받은거 콘솔 찍기 용
+     console.log("받은 응답:", response);
+     // 그냥 응답 받은거 콘솔 찍기 용
 });
 
 export { sendEvent, socket };

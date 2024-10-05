@@ -221,6 +221,8 @@ function reset() {
      sendEvent(2, {
           timestamp: Date.now(),
      });
+
+     sendEvent(10);
 }
 
 function setupGameReset() {
@@ -239,6 +241,7 @@ function clearScreen() {
 }
 
 score = new Score(ctx, scaleRatio, itemController);
+
 function gameLoop(currentTime) {
      if (previousTime === null) {
           previousTime = currentTime;
@@ -295,6 +298,7 @@ function gameLoop(currentTime) {
      cactiController.draw();
      ground.draw();
      score.draw();
+     score.highScoreDraw();
 
      // itemController가 null이 아닌 경우에만 draw 호출
      if (itemController) {
@@ -312,5 +316,6 @@ function gameLoop(currentTime) {
      // 재귀 호출 (무한반복)
      requestAnimationFrame(gameLoop);
 }
+
 requestAnimationFrame(gameLoop);
 window.addEventListener("keyup", reset, { once: true });
