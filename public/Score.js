@@ -14,6 +14,7 @@ class Score {
           this.scaleRatio = scaleRatio;
           this.itemController = itemController;
           this.stages = [];
+          this.stageNum = 1;
 
           this.loadStageData();
 
@@ -59,6 +60,8 @@ class Score {
                // 아이템 컨트롤러에 스테이지 변경 알림
                this.itemController.changeStage(newStageId);
                this.currentStageId = newStageId;
+               this.stageNum += 1;
+               this.drawStageNum();
 
                this.stageChange = false; // 스테이지 변경 후 중복 요청 방지
 
@@ -77,6 +80,7 @@ class Score {
           this.score = 0;
           this.currentStageId = 1000;
           this.stageChange = true; // 초기화 시 플래그도 초기화
+          this.stageNum = 1;
      }
 
      setHighScore(finalScore) {
@@ -94,6 +98,13 @@ class Score {
      // 일반 유저 점수
      draw() {
           this.drawScore(this.score, this.canvas.width - 75 * this.scaleRatio);
+     }
+
+     drawStageNum() {
+          this.drawScore(
+               this.stageNum,
+               this.canvas.width - 20 * this.scaleRatio
+          );
      }
 
      // 최고 점수

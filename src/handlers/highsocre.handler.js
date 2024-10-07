@@ -9,10 +9,6 @@ export const updateHighScore = async (uuid, payload) => {
           const { finalScore } = payload;
           const currentHighScoredata = await getData(HIGH_SCORE_KEY);
 
-          // if (!currentHighScoredata) {
-          //      return { status: "success", broadcast: true, score: 0 };
-          // }
-
           const parsedData = JSON.parse(currentHighScoredata); // 문자열을 객체로 변환
           let score = 0;
           if (parsedData) {
