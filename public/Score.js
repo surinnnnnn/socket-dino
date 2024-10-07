@@ -61,7 +61,6 @@ class Score {
                this.itemController.changeStage(newStageId);
                this.currentStageId = newStageId;
                this.stageNum += 1;
-               this.drawStageNum();
 
                this.stageChange = false; // 스테이지 변경 후 중복 요청 방지
 
@@ -101,10 +100,16 @@ class Score {
      }
 
      drawStageNum() {
-          this.drawScore(
-               this.stageNum,
-               this.canvas.width - 20 * this.scaleRatio
-          );
+          const x = this.canvas.width / 2;
+          const y = 20 * this.scaleRatio;
+
+          this.ctx.font = `${fontSize}px serif`;
+          this.ctx.fillStyle = "#525250";
+          this.ctx.textAlign = "center";
+
+          this.ctx.fillText(`Stage: ${this.stageNum}`, x, y);
+
+          this.ctx.textAlign = "left";
      }
 
      // 최고 점수
