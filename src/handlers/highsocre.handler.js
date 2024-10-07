@@ -35,7 +35,7 @@ export const updateHighScore = async (uuid, payload) => {
 export const getHighScore = async (uuid, payload) => {
      try {
           const data = await getData(HIGH_SCORE_KEY);
-          console.log(data);
+          console.log("data:", data);
           if (data) {
                const parsedData = JSON.parse(data); // 문자열을 객체로 변환
                const score = parsedData.score;
