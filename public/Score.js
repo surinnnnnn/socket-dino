@@ -1,5 +1,5 @@
 import { sendEvent, socket } from "./Socket.js";
-import stage from "../assets/stage.json" with { type: "json" };
+import stage from "./assets/stage.json" with { type: "json" };
 
 class Score {
      score = 0;
@@ -7,6 +7,7 @@ class Score {
      stageChange = true;
      currentStageId = 1000;
      highScore = 0; // 초기화
+     s;
 
      constructor(ctx, scaleRatio, itemController) {
           this.ctx = ctx;

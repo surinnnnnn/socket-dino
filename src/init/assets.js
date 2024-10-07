@@ -9,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 // fileURLToPath는 URL 문자열을 파일 시스템의 경로로 변환
 const __dirname = path.dirname(__filename);
 // path.dirname() 함수는 파일 경로에서 디렉토리 경로만 추출 (파일 이름을 제외한 디렉토리의 전체 경로)
-const basePath = path.join(__dirname, "../../assets");
+const basePath = path.join(__dirname, "../../public/assets");
 // __dirname과 ../../assets를 결합하여 현재 파일의 폴더 경로에서 'assets' 디렉토리로 이동하는 경로
 
 let gameAssets = {}; //전역 변수 선언, 게임데이터 추출용함수
