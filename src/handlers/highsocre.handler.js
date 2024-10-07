@@ -43,6 +43,11 @@ export const getHighScore = async (uuid, payload) => {
                     status: "success",
                     broadcast: Math.floor(Number(score)) || 0,
                };
+          } else {
+               return {
+                    status: "success",
+                    broadcast: 0,
+               };
           }
      } catch (error) {
           console.error("Error retrieving high score:", error);
