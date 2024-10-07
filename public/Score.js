@@ -36,7 +36,7 @@ class Score {
      }
 
      update(deltaTime) {
-          this.score += deltaTime * 0.01 * scoreIncrement;
+          this.score += deltaTime * 0.01 * this.scoreIncrement;
 
           const currentStageData = this.stages.find(
                (stage) => this.score >= stage.score
