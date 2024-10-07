@@ -6,8 +6,8 @@ class Score {
      HIGH_SCORE_KEY = "highScore";
      stageChange = true;
      currentStageId = 1000;
-     highScore = 0; // 초기화
-     s;
+     scoreIncrement = 1;
+     highScore = 0;
 
      constructor(ctx, scaleRatio, itemController) {
           this.ctx = ctx;
@@ -35,7 +35,7 @@ class Score {
      }
 
      update(deltaTime) {
-          this.score += deltaTime * 0.01;
+          this.score += deltaTime * 0.01 * scoreIncrement;
 
           const currentStageData = this.stages.find(
                (stage) => this.score >= stage.score
@@ -62,6 +62,7 @@ class Score {
                this.itemController.changeStage(newStageId);
                this.currentStageId = newStageId;
                this.stageNum += 1;
+               this.scoreIncrement += 1;
 
                this.stageChange = false; // 스테이지 변경 후 중복 요청 방지
 
@@ -81,6 +82,7 @@ class Score {
           this.currentStageId = 1000;
           this.stageChange = true; // 초기화 시 플래그도 초기화
           this.stageNum = 1;
+          this.scoreIncrement = 1;
      }
 
      setHighScore(finalScore) {
