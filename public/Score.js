@@ -35,20 +35,21 @@ class Score {
      }
 
      update(deltaTime) {
-          const scorePerSecond = this.stages ? this.stages.scorePerSecond : 1;
-          this.scoreIncrement += deltaTime * 0.01 * scorePerSecond;
-
-          if (this.scoreIncrement >= scorePerSecond) {
-               this.score += scorePerSecond;
-               this.scoreIncrement -= scorePerSecond;
-          }
-
           const currentStageData = this.stages.find(
                (stage) => this.score >= stage.score
           );
           const nextStageData = this.stages.find(
                (stage) => this.score < stage.score
           );
+          const scorePerSecond = currentStageData
+               ? currentStageData.scorePerSecond
+               : 1;
+          this.scoreIncrement += deltaTime * 0.01 * scorePerSecond;
+
+          if (this.scoreIncrement >= scorePerSecond) {
+               this.score += scorePerSecond;
+               this.scoreIncrement -= scorePerSecond;
+          }
 
           // 점수가 다음 스테이지의 조건에 맞을 때만 스테이지 변경
           if (
