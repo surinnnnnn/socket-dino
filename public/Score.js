@@ -16,7 +16,6 @@ class Score {
           this.itemController = itemController;
           this.stages = [];
           this.stageNum = 1;
-          this.scoreIncrement = scoreIncrement;
 
           this.loadStageData();
 
@@ -36,7 +35,13 @@ class Score {
      }
 
      update(deltaTime) {
-          this.score += deltaTime * 0.01 * this.scoreIncrement;
+          const scorePerSecond = this.stages ? this.stages.scorePerSecond : 1;
+          this.scoreIncrement += deltaTime * 0.01 * scorePerSecond;
+
+          if (this.scoreIncrement >= scorePerSecond) {
+               this.score += scorePerSecond;
+               this.scoreIncrement -= scorePerSecond;
+          }
 
           const currentStageData = this.stages.find(
                (stage) => this.score >= stage.score
