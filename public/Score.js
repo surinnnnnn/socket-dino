@@ -6,16 +6,17 @@ class Score {
      HIGH_SCORE_KEY = "highScore";
      stageChange = true;
      currentStageId = 1000;
-     scoreIncrement = 1;
      highScore = 0;
+     scoreIncrement = 0;
 
-     constructor(ctx, scaleRatio, itemController) {
+     constructor(ctx, scaleRatio, itemController, scoreIncrement) {
           this.ctx = ctx;
           this.canvas = ctx.canvas;
           this.scaleRatio = scaleRatio;
           this.itemController = itemController;
           this.stages = [];
           this.stageNum = 1;
+          this.scoreIncrement = scoreIncrement;
 
           this.loadStageData();
 
