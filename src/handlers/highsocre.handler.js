@@ -25,7 +25,11 @@ export const updateHighScore = async (uuid, payload) => {
                });
                await setData(HIGH_SCORE_KEY, newHighScoreData);
 
-               return { status: "success", broadcast: true, score: finalScore };
+               return {
+                    status: "success",
+                    broadcast: true,
+                    score: Math.floor(finalScore),
+               };
           } else {
                return { status: "no_update", score: currentHighScoreValue };
           }
