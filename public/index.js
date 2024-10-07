@@ -299,6 +299,7 @@ function gameLoop(currentTime) {
      ground.draw();
      score.draw();
      score.highScoreDraw();
+     score.drawStageNum();
 
      // itemController가 null이 아닌 경우에만 draw 호출
      if (itemController) {
