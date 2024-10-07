@@ -21,12 +21,12 @@ app.use(express.urlencoded({ extended: false }));
 // ㄴ> payload 를 자동으로 파싱해주는 미들웨어: 중첩객체(배열 또는 객체)의 처리를 제한한다.
 
 app.use("/assets", express.static("assets"));
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "../public")));
 
 initSocket(server);
 
 app.get("/", (req, res) => {
-     res.sendFile(path.join(__dirname, "public", "index.html"));
+     res.sendFile(path.join(__dirname, "../public", "index.html"));
 });
 server.listen(PORT, async () => {
      console.log(`Server is running on port ${PORT}`);
