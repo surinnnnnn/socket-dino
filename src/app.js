@@ -20,6 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 // ㄴ> payload 를 자동으로 파싱해주는 미들웨어: 중첩객체(배열 또는 객체)의 처리를 제한한다.
 
+app.use("/model", express.static(path.join(__dirname, "../models")));
 app.use("/assets", express.static(path.join(__dirname, "../assets")));
 app.use(express.static(path.join(__dirname, "../public")));
 
