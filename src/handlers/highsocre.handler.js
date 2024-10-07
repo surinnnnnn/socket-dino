@@ -9,12 +9,15 @@ export const updateHighScore = async (uuid, payload) => {
           const { finalScore } = payload;
           const currentHighScoredata = await getData(HIGH_SCORE_KEY);
 
+          if (!currentHighScoredata) {
+               return { status: "success", broadcast: true, score: 0 };
+          }
           const parsedData = JSON.parse(currentHighScoredata); // 문자열을 객체로 변환
           const score = parsedData.score;
           const currentHighScoreValue = Number(score) || 0;
 
           // 새로운 점수가 현재 최고 점수보다 높은 경우에만 업데이트
-          if (finalScore > currentHighScoreValue || !currentHighScoredata) {
+          if (finalScore > currentHighScoreValue) {
                const newHighScoreData = JSON.stringify({
                     uuid,
                     score: finalScore,
