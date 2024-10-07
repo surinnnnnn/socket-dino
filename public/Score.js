@@ -102,7 +102,7 @@ class Score {
      drawStageNum() {
           const x = this.canvas.width / 2;
           const y = 20 * this.scaleRatio;
-
+          const fontSize = 30 * this.scaleRatio;
           this.ctx.font = `${fontSize}px serif`;
           this.ctx.fillStyle = "#525250";
           this.ctx.textAlign = "center";
